@@ -3,32 +3,32 @@
 #include<vector>
 using namespace std;
 
-void generate_brackets(string out,int indx,int open,int close,int n,vector<string>& res){
+void generate_brackets(char* out,int indx,int open,int close,int n){
 
-    if(indx == 2*n){
-        return res.push_back(out);
-    }
-
-    else if(open < n){
-        out = out + '(';
-        generate_brackets(out,indx + 1, open + 1, close, n,res);
+    if(indx == (2*n)){
+        out[indx] = '\0';
+        cout<<out<<endl;
         return;
     }
 
-    else if(close < open){
-        out = out + ')';
-        generate_brackets(out, indx + 1, open, close + 1, n,res);
-        return;
-
+    if(open < n){
+        out[indx] = '(';
+        generate_brackets(out,indx + 1, open + 1, close, n);
     }
 
+    if(close < open){
+        out[indx] = ')';
+        generate_brackets(out, indx + 1, open, close + 1, n);
+
+    }
+    return;
 }
 
 vector<string> generate_brackets(int n){
 
     vector<string> result;
     result.clear();
-    generate_brackets("",0,0,0,n,result);
+    //generate_brackets("",0,0,0,n);
 
     return result;
 
@@ -42,10 +42,8 @@ int main(){
     while(T--){
         int n;
         cin>>n;
-        vector<string> res = generate_brackets(n);
-        for(int i = 0; i < res.size(); i++){
-            cout<<res[i]<<endl;
-        }
+        char* out = new char[2*n];
+        generate_brackets(out,0,0,0,n);
     }
     return 0;
 }
